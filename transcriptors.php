@@ -2,7 +2,7 @@
 
 require 'lookup_tables.php';
 
-function latin2glagolitic ($text)
+function lat2gla ($text)
 {
   global $LG, $LG_named;
 
@@ -153,7 +153,7 @@ function latin2glagolitic ($text)
   return implode($new_text);
 }
 
-function glagolitic2latin ($text)
+function gla2lat ($text)
 {
   global $GL;
 

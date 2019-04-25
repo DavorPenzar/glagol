@@ -30,7 +30,7 @@ try
     throw new Exception("Direction \"" . $dir . "\" not recognised.");
 
   output_json(
-    $dir === 'l2g' ? latin2glagolitic($text) : glagolitic2latin($text)
+    $dir === 'l2g' ? lat2gla($text) : gla2lat($text)
   );
 }
 catch (Exception $e)
