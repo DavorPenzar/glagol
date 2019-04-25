@@ -45,6 +45,8 @@ function latin2glagolitic ($text)
 
     if ($text[$i] === '/')
     {
+      $j = $i;
+
       for ($j = $i + 1; $j < sizeof($text); ++$j)
       {
         if ($text[$j] === "\\")
@@ -92,6 +94,8 @@ function latin2glagolitic ($text)
     }
     elseif ($text[$i] === '[')
     {
+      $j = $i;
+
       for ($j = $i + 1; $j < sizeof($text); ++$j)
       {
         if ($text[$j] === "\\")
