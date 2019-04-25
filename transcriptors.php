@@ -12,9 +12,12 @@ function lat2gla ($text)
   $text = preg_split('//u', $text);
   $new_text = array();
 
-  $space = FALSE;
+  $space = TRUE;
   for ($i = 0; $i < sizeof($text); ++$i)
   {
+    if ($text[$i] === '')
+      continue;
+
     if ($text[$i] === "\\")
     {
       if ($i + 1 < sizeof($text))
@@ -32,7 +35,7 @@ function lat2gla ($text)
       throw new Exception("Escape character (\"\\\") misuse.");
     }
 
-    if ($text[$i] === '' || ctype_space($text[$i]))
+    if (ctype_space($text[$i]))
     {
       $space = TRUE;
 
@@ -41,34 +44,13 @@ function lat2gla ($text)
       continue;
     }
 
-    $space = FALSE;
-
     if ($text[$i] === '/')
     {
       $j = $i;
 
       for ($j = $i + 1; $j < sizeof($text); ++$j)
-      {
-        if ($text[$j] === "\\")
-        {
-          if ($j + 1 < sizeof($text))
-            if (
-              $text[$j + 1] === '/' ||
-              $text[$j + 1] === '[' ||
-              $text[$j + 1] === ']'
-            )
-            {
-              ++$j;
-
-              continue;
-            }
-
-          throw new Exception("Escape character (\"\\\") misuse.");
-        }
-
         if ($text[$j] === '/')
           break;
-      }
 
       if ($j === sizeof($text))
         throw new Exception("Special character (\"/\") misuse.");
@@ -97,27 +79,8 @@ function lat2gla ($text)
       $j = $i;
 
       for ($j = $i + 1; $j < sizeof($text); ++$j)
-      {
-        if ($text[$j] === "\\")
-        {
-          if ($j + 1 < sizeof($text))
-            if (
-              $text[$j + 1] === '/' ||
-              $text[$j + 1] === '[' ||
-              $text[$j + 1] === ']'
-            )
-            {
-              ++$j;
-
-              continue;
-            }
-
-          throw new Exception("Escape character (\"\\\") misuse.");
-        }
-
         if ($text[$j] === ']')
           break;
-      }
 
       if ($j === sizeof($text))
         throw new Exception("Special character (\"[\") misuse.");
@@ -148,6 +111,8 @@ function lat2gla ($text)
           array_push($new_text, $text[$i]);
       }
     }
+
+    $space = FALSE;
   }
 
   return implode($new_text);
