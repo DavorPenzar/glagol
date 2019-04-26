@@ -7,7 +7,7 @@ Ovaj direktorij daje jednostavne *PHP* skripte za transkripciju s latinice (zbog
 Iz sadržaja repozitorija izuzeta je ova *pročitajme* (*readme*) datoteka.
 
 1.  [**output_json.php**](output_json.php) &ndash; funkcija `output_json` za jednostavni ispis u *JSON* formatu i po želji prekid izvršavanja *PHP* skripte,
-2.  [**lookup_tables.php**](lookup_tables.php) &ndash; *lookup tablice* za transkripciju, to jest, asocijativni nizovi koji omogućuju funkcijsko preslikavanje iz skupova znakova,
+2.  [**lookup_tables.php**](lookup_tables.php) &ndash; *lookup tablice* za transkripciju, to jest, asocijativni nizovi koji omogućuju funkcijsko preslikavanje između abeceda,
 3.  [**transcriptors.php**](transcriptors.php) &ndash; funkcije `lat2gla` i `gla2lat` za transkripciju s latinice na glagoljicu i s glagoljice na latinicu respektivno,
 4.  [**index.php**](index.php) &ndash; demonstracija korištenja funkcija iz [*transcriptors.php*](transcriptors.php) pomoću metode *GET* s *JSON* izlazom.
 
