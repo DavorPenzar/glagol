@@ -117,7 +117,7 @@ define(
  * {@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']] su istinitne vrijednosti.  Također, ako se više
  * slova (ključeva) u nizu {@link LG} preslikava u isto slovo (vrijednost), tom je slovu
  * (vrijednosti), kao kao ključu, u nizu {@link GL} pridruženo samo jedno od početnih
- * početnih slova.
+ * slova.
  * @var array GL glagoljica >> latinica
  * @name GL
  */
