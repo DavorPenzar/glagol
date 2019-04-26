@@ -6,6 +6,12 @@ function lat2gla ($text)
 {
   global $LG, $LG_named;
 
+  if (!(isset($LG) && isset($LG_named)))
+    throw new Exception('Unexpected error.');
+
+  if (!(is_array($LG) && is_array($LG)))
+    throw new Exception('Unexpected error.');
+
   if (!is_string($text))
     throw new Exception('Argument must be a string.');
 
@@ -35,7 +41,7 @@ function lat2gla ($text)
       throw new Exception("Escape character (\"\\\") misuse.");
     }
 
-    if (ctype_space($text[$i]))
+    if ($text[$i] === '' || ctype_space($text[$i]))
     {
       $space = TRUE;
 
@@ -44,72 +50,77 @@ function lat2gla ($text)
       continue;
     }
 
-    if ($text[$i] === '/')
+    switch ($text[$i])
     {
-      $j = $i;
+      case '/':
+        $j = $i;
 
-      for ($j = $i + 1; $j < sizeof($text); ++$j)
-        if ($text[$j] === '/')
-          break;
+        for ($j = $i + 1; $j < sizeof($text); ++$j)
+          if ($text[$j] === '/')
+            break;
 
-      if ($j === sizeof($text))
-        throw new Exception("Special character (\"/\") misuse.");
+        if ($j === sizeof($text))
+          throw new Exception("Special character (\"/\") misuse.");
 
-      $key = implode(array_slice($text, $i + 1, $j - $i - 1));
+        $key = implode(array_slice($text, $i + 1, $j - $i - 1));
 
-      $i = $j;
-      unset($j);
+        $i = $j;
+        unset($j);
 
-      if (array_key_exists($key, $LG_named))
-      {
-        $key = $LG_named[$key];
-
-        if ($space && $key === 'Ï' || $key === 'ï')
-          array_push($new_text, $LG['_' . $key]);
+        if (array_key_exists($key, $LG_named))
+          $key = $LG_named[$key];
         else
+          throw new Exception("Named letter \"" . $key . "\" not found.");
+
+        if ($space && array_key_exists('_' . $key, $LG))
+          $key = '_' . $key;
+
+        if (array_key_exists($key, $LG))
           array_push($new_text, $LG[$key]);
-      }
-      else
-        throw new Exception("Named letter \"" . $key . "\" not found.");
+        else
+          throw new Exception("Unexpected transcription chain break up.");
 
-      unset($key);
-    }
-    elseif ($text[$i] === '[')
-    {
-      $j = $i;
+        unset($key);
 
-      for ($j = $i + 1; $j < sizeof($text); ++$j)
-        if ($text[$j] === ']')
-          break;
+        break;
+      case '[':
+        $j = $i;
 
-      if ($j === sizeof($text))
-        throw new Exception("Special character (\"[\") misuse.");
+        for ($j = $i + 1; $j < sizeof($text); ++$j)
+          if ($text[$j] === ']')
+            break;
 
-      $key = implode(array_slice($text, $i, $j - $i + 1));
+        if ($j === sizeof($text))
+          throw new Exception("Special character (\"[\") misuse.");
 
-      $i = $j;
-      unset($j);
+        $key = implode(array_slice($text, $i, $j - $i + 1));
 
-      if (array_key_exists($key, $LG))
-        array_push($new_text, $LG[$key]);
-      else
-        throw new Exception("Letter variant \"" . $key . "\" not found.");
+        $i = $j;
+        unset($j);
 
-      unset($key);
-    }
-    elseif ($text[$i] === ']')
-      throw new Exception("Special character (\"]\") misuse.");
-    else
-    {
-      if ($space && $text[$i] === 'Ï' || $text[$i] === 'ï')
-        array_push($new_text, $LG['_' . $text[$i]]);
-      else
-      {
+        if ($space && array_key_exists('_' . $key, $LG))
+          $key = '_' . $key;
+
+        if (array_key_exists($key, $LG))
+          array_push($new_text, $LG[$key]);
+        else
+          throw new Exception("Letter variant \"" . $key . "\" not found.");
+
+        unset($key);
+
+        break;
+      case ']':
+        throw new Exception("Special character (\"]\") misuse.");
+
+        break;
+      default:
+        if ($space && array_key_exists('_' . $text[$i], $LG))
+          $text[$i] = '_' . $text[$i];
+
         if (array_key_exists($text[$i], $LG))
           array_push($new_text, $LG[$text[$i]]);
         else
           array_push($new_text, $text[$i]);
-      }
     }
 
     $space = FALSE;
@@ -121,6 +132,12 @@ function lat2gla ($text)
 function gla2lat ($text)
 {
   global $GL;
+
+  if (!isset($GL))
+    throw new Exception('Unexpected error.');
+
+  if (!is_array($GL))
+    throw new Exception('Unexpected error.');
 
   if (!is_string($text))
     throw new Exception('Argument must be a string.');

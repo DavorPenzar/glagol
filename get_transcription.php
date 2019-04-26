@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require 'output_json.php';
 require 'transcriptors.php';
 
@@ -12,7 +10,11 @@ try
 {
   if (array_key_exists('text', $_GET) && array_key_exists('dir', $_GET))
   {
-    $text = strval($_GET['text']);
+    $text = json_decode($_GET['text']);
+
+    if (!is_string($text))
+      $text = strval($_GET['text']);
+
     $dir = strval($_GET['dir']);
 
     unset($_GET['text']);
@@ -20,7 +22,7 @@ try
 
     if (!empty($_GET))
       throw new Exception(
-        'Unrecognised parameters ' . implode(', ', array_keys($_GET)) . '.'
+        'Unrecognised parameters: ' . implode(', ', array_keys($_GET)) . '.'
       );
   }
   else
