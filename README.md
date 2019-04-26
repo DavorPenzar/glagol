@@ -38,4 +38,5 @@ localhost/.../glagol?text="Pjesnici%20su%20\u010du\u0111enje%20u%20svijetu"&dir=
 
 ## TO DO
 
-1.  Objasniti ovdje kako, u transkripciji *l2g*, zadati glagoljički znak imenom umjesto jedinstvenim znakom i kako zahtijevati alternativnu varijantu glagoljičkog znaka.
+1.  Dodati ovdje tablicu glagoljice, kako se slova transkribiraju i kako se slova zovu.
+2.  Objasniti ovdje kako, u transkripciji *l2g*, zadati glagoljički znak imenom umjesto jedinstvenim znakom i kako zahtijevati alternativnu varijantu glagoljičkog znaka.
