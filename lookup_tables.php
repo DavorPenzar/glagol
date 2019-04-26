@@ -114,9 +114,9 @@ define(
  * Kao inverz nizu {@link LG}, ali sve varijante istog glagoljičnog slova, kao
  * "stringova", preslikavaju se u isto (jedinstveno) latinični slovo, također
  * kao "stringovi".  Dakle, usporedbe {@link GL}[{@link LG}['_×']] === {@link GL}[{@link LG}['×']] i
- * {@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']] su istinitne vrijednosti.  Također, ako se
- * više slova (ključeva) u nizu {@link LG} preslikava u isto slovo (vrijednost), tom je
- * slovu (vrijednosti), kao kao ključu, u nizu {@link GL} pridruženo samo jedno od
+ * {@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']] su istinitne vrijednosti.  Također, ako se više
+ * slova (ključeva) u nizu {@link LG} preslikava u isto slovo (vrijednost), tom je slovu
+ * (vrijednosti), kao kao ključu, u nizu {@link GL} pridruženo samo jedno od početnih
  * početnih slova.
  * @var array GL glagoljica >> latinica
  * @name GL
