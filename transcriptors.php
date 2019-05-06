@@ -35,6 +35,14 @@ function lat2gla ($text)
   if (func_num_args() > 1)
     throw new Exception('Too many arguments given.');
 
+  // Ako LG i LG_named nisu definirani, izbaci iznimku.
+  if (LG === null || LG_named === null)
+    throw new Exception('Unexpected environment error.');
+
+  // Ako LG i LG_named nisu nizovi, izbaci iznimku.
+  if (!(is_array(LG) && is_array(LG_named)))
+    throw new Exception('Unexpected environment error');
+
   // Provjeri tip argumenta.  Ako nije "string", izbaci iznimku.
   if (!is_string($text))
     throw new Exception('Argument must be a string.');
@@ -248,6 +256,14 @@ function gla2lat ($text)
   // Ako je previše argumenata dano, izbaci iznimku.
   if (func_num_args() > 1)
     throw new Exception('Too many arguments given.');
+
+  // Ako GL nije definiran, izbaci iznimku.
+  if (GL === null)
+    throw new Exception('Unexpected environment error.');
+
+  // Ako GL nije niz, izbaci iznimku.
+  if (!is_array(GL))
+    throw new Exception('Unexpected environment error.');
 
   // Provjeri tip argumenta.  Ako nije "string", izbaci iznimku.
   if (!is_string($text))
