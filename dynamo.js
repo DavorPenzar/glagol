@@ -81,7 +81,7 @@ let transcribe = function (dir, text, destination)
         {
           /* Ako je poruka greške prazna, ispiši 'Greška.'. */
           if (status === null)
-            set_error('Greška.');
+            set_error("Greška.");
 
           /* Ispiši poruku greške. */
           set_error(status);
@@ -92,7 +92,7 @@ let transcribe = function (dir, text, destination)
           /* Provjeri je li objekt odgovora definiran. */
           if (ans === null)
           {
-            set_error('Greška: nedefinirani odgovor poslužitelja.');
+            set_error("Greška: nedefinirani odgovor poslužitelja.");
 
             return;
           }
@@ -100,7 +100,7 @@ let transcribe = function (dir, text, destination)
           /* Provjeri je li odgovor instanca klase `object'. */
           if (typeof ans !== 'object')
           {
-            set_error('Greška: neočekivani tip odgovora poslužitelja.');
+            set_error("Greška: neočekivani tip odgovora poslužitelja.");
 
             return;
           }
@@ -113,7 +113,7 @@ let transcribe = function (dir, text, destination)
                * 'transcription.' */
               if (!('transcription' in ans))
               {
-                set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
+                set_error("Greška: neočekivani sadržaj odgovora poslužitelja.");
 
                 return;
               }
@@ -124,7 +124,7 @@ let transcribe = function (dir, text, destination)
                * 'error'. */
               if (!('transcription' in ans && 'error' in ans))
               {
-                set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
+                set_error("Greška: neočekivani sadržaj odgovora poslužitelja.");
 
                 return;
               }
@@ -133,7 +133,7 @@ let transcribe = function (dir, text, destination)
 
             default:
               /* Nula ili strogo više od dva ključa nisu valjani odgovor. */
-              set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
+              set_error("Greška: neočekivani sadržaj odgovora poslužitelja.");
 
               return;
           }
@@ -150,7 +150,7 @@ let transcribe = function (dir, text, destination)
               )
             )
             {
-              set_error('Greška: neočekivana greška na strani poslužitelja.');
+              set_error("Greška: neočekivana greška na strani poslužitelja.");
 
               return;
             }
@@ -158,13 +158,13 @@ let transcribe = function (dir, text, destination)
             /* Provjeri je li transkripcija definirana. */
             if (ans['transcription'] !== null)
             {
-              set_error('Greška: redundantni sadržaj odgovora poslužitelja.');
+              set_error("Greška: redundantni sadržaj odgovora poslužitelja.");
 
               return;
             }
 
             /* Ispiši poruku greške. */
-            set_error(ans['error'] === null ? 'Greška.' : ans['error']);
+            set_error(ans['error'] === null ? "Greška" : ans['error']);
 
             return;
           }
@@ -177,7 +177,7 @@ let transcribe = function (dir, text, destination)
             )
           )
           {
-            set_error('Greška: neočekivani tip transkripcije.');
+            set_error("Greška: neočekivani tip transkripcije.");
 
             return;
           }
