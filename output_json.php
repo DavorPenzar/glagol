@@ -12,7 +12,8 @@
  * Postavlja se odgovarajuće HTTP zaglavlje ("header") i naredbom "echo"
  * ispisuje se dana poruka u JSON formatu.  Ako izlazno stanje nije NULL,
  * prekida se izvrsavanje skripte pozivom funkcije exit s danim izlaznim
- * stanjem.
+ * stanjem; u suprotnom nije osiguran ispis (ne poziva se flush()) pri završetku
+ * funkcije.
  * @param mixed $message poruka čija se JSON reprezentacija ispisuje
  * @param null|int $exit_status (optional) izlazno stanje
  */

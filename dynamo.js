@@ -38,7 +38,7 @@ let set_error = function (err)
 
   /* Provjeri tip argumenta. */
   if (!(typeof err === 'string' || err instanceof String))
-    throw new Error('Invalid argument type');
+    throw new Error('Parameter err must be a string.');
 
   /* Ispiši poruku na #celija-greska i prikaži #redak-greska. */
   $('#celija-greska').text(err);
@@ -64,6 +64,11 @@ let transcribe = function (dir, text, destination)
   if (arguments.length != 3)
     throw new Error('Bad function call.');
 
+  if (!(typeof dir === 'string' || dir instanceof String))
+    throw new Error('Parameter dir must be a string.');
+  if (!(typeof text === 'string' || text instanceof String))
+    throw new Error('Parameter text must be a string.');
+
   /* Pošalji AJAX zahtjev. */
   $.ajax(
     {
@@ -74,9 +79,9 @@ let transcribe = function (dir, text, destination)
       error:
         function (xhr, status)
         {
-          /* Ako je poruka greške prazna, ispiši 'Error.'. */
+          /* Ako je poruka greške prazna, ispiši 'Greška.'. */
           if (status === null)
-            set_error('Erro.');
+            set_error('Greška.');
 
           /* Ispiši poruku greške. */
           set_error(status);
@@ -87,7 +92,7 @@ let transcribe = function (dir, text, destination)
           /* Provjeri je li objekt odgovora definiran. */
           if (ans === null)
           {
-            set_error('Unexpected communication error.');
+            set_error('Greška: nedefinirani odgovor poslužitelja.');
 
             return;
           }
@@ -95,7 +100,7 @@ let transcribe = function (dir, text, destination)
           /* Provjeri je li odgovor instanca klase `object'. */
           if (typeof ans !== 'object')
           {
-            set_error('Unexpected communication error.');
+            set_error('Greška: neočekivani tip odgovora poslužitelja.');
 
             return;
           }
@@ -108,7 +113,7 @@ let transcribe = function (dir, text, destination)
                * 'transcription.' */
               if (!('transcription' in ans))
               {
-                set_error('Unexpected communication error.');
+                set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
 
                 return;
               }
@@ -119,7 +124,7 @@ let transcribe = function (dir, text, destination)
                * 'error'. */
               if (!('transcription' in ans && 'error' in ans))
               {
-                set_error('Unexpected communication error (missing keys).');
+                set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
 
                 return;
               }
@@ -128,7 +133,7 @@ let transcribe = function (dir, text, destination)
 
             default:
               /* Nula ili strogo više od dva ključa nisu valjani odgovor. */
-              set_error('Unexpected communication error.');
+              set_error('Greška: neočekivani sadržaj odgovora poslužitelja.');
 
               return;
           }
@@ -136,26 +141,43 @@ let transcribe = function (dir, text, destination)
           /* Provjeri je li odgovor rezultirao greškom. */
           if ('error' in ans)
           {
-            /* Provjeri je li sadržaj greske "string" i je li transkripcija
-             * nedefinirana. */
+            /* Provjeri je li sadržaj greške "string". */
             if (
-              typeof ans['error'] !== 'string' || ans['transcription'] !== null
+              !(
+                ans['error'] === null ||
+                typeof ans['error'] === 'string' ||
+                ans['error'] instanceof String
+              )
             )
             {
-              set_error('Unexpected communication error.');
+              set_error('Greška: neočekivana greška na strani poslužitelja.');
 
               return;
             }
 
-            set_error(ans['error']);
+            /* Provjeri je li transkripcija definirana. */
+            if (ans['transcription'] !== null)
+            {
+              set_error('Greška: redundantni sadržaj odgovora poslužitelja.');
+
+              return;
+            }
+
+            /* Ispiši poruku greške. */
+            set_error(ans['error'] === null ? 'Greška.' : ans['error']);
 
             return;
           }
 
           /* Provjeri je li sadržaj transkripcije "string". */
-          if (typeof ans['transcription'] !== 'string')
+          if (
+            !(
+              typeof ans['transcription'] === 'string' ||
+              ans['transcription'] instanceof String
+            )
+          )
           {
-            set_error('Unexpected communication error.');
+            set_error('Greška: neočekivani tip transkripcije.');
 
             return;
           }
@@ -213,6 +235,10 @@ $(document).ready(
         /* Dohvati smjer transkripcije. */
         var dir = $('input[type=radio][name=dir]:checked').val();
 
+        /* Provjeri je li smjer transkripcije zadan "stringom". */
+        if (!(typeof dir === 'string' || dir instanceof String))
+          throw new Error('Invalid type of the value dir.');
+
         /* Ovisno o smjeru transkripcije, pozovi funckiju transcribe s
          * odgovarajućim argumentima. */
         switch (dir)
@@ -235,7 +261,7 @@ $(document).ready(
             transcribe(dir, '', null);
         }
 
-        /* Vrati laž da se stranica ne osvjezi. */
+        /* Vrati laž da se stranica ne osvježi. */
         return false;
       }
     );

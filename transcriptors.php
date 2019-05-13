@@ -7,7 +7,7 @@
  * @package glagol
  */
 
-require 'lookup_tables.php';
+require_once 'lookup_tables.php';
 
 /**
  * Transkribiraj s latinice na glagoljicu.
@@ -29,7 +29,7 @@ require 'lookup_tables.php';
  * @param string $text tekst na latinici koji se transkribira
  * @return string transkripcija danog teksta na glagoljicu
  */
-function lat2gla ($text)
+function transcribe_latinic_to_glagolitic ($text)
 {
   // Ako je previše argumenata dano, izbaci iznimku.
   if (func_num_args() > 1)
@@ -37,11 +37,15 @@ function lat2gla ($text)
 
   // Ako LG i LG_named nisu definirani, izbaci iznimku.
   if (LG === null || LG_named === null)
-    throw new Exception('Unexpected environment error.');
+    throw new Exception(
+      'Unexpected environment error: array(s) LG or LG_named missing.'
+    );
 
   // Ako LG i LG_named nisu nizovi, izbaci iznimku.
   if (!(is_array(LG) && is_array(LG_named)))
-    throw new Exception('Unexpected environment error');
+    throw new Exception(
+      'Unexpected environment error: LG or LG_named are not arrays.'
+    );
 
   // Provjeri tip argumenta.  Ako nije "string", izbaci iznimku.
   if (!is_string($text))
@@ -251,7 +255,7 @@ function lat2gla ($text)
  * @param string $text tekst na glagoljici koji se transkribira
  * @return string transkripcija danog teksta na latinicu
  */
-function gla2lat ($text)
+function transcribe_glagolitic_to_latinic ($text)
 {
   // Ako je previše argumenata dano, izbaci iznimku.
   if (func_num_args() > 1)
@@ -259,11 +263,11 @@ function gla2lat ($text)
 
   // Ako GL nije definiran, izbaci iznimku.
   if (GL === null)
-    throw new Exception('Unexpected environment error.');
+    throw new Exception('Unexpected environment error: array GL missing.');
 
   // Ako GL nije niz, izbaci iznimku.
   if (!is_array(GL))
-    throw new Exception('Unexpected environment error.');
+    throw new Exception('Unexpected environment error: GL is not an array.');
 
   // Provjeri tip argumenta.  Ako nije "string", izbaci iznimku.
   if (!is_string($text))

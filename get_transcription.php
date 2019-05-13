@@ -9,33 +9,38 @@
  * glagoljicu) ili 'g2l' (transkribiraj s glagoljice na latinicu).  Povratni
  * objekt na ključu 'transcription' sadrži tekst transkripcije ("string"), a,
  * ako se pri transkripciji dogodila greška, na ključu 'transcription' je
- * nedefinirana vrijednost (null), dok je na ključu 'error' poruka greske
- * ("string").  Kod uspješne transkripcije ključ 'error' ne postoji).
+ * nedefinirana vrijednost (null), dok je na ključu 'error' poruka greške
+ * ("string").  Kod uspješne transkripcije ključ 'error' ne postoji.
  * @author Davor Penzar <davor.penzar@gmail.com>
  * @version 1.0
  * @package glagol
  */
 
-require 'output_json.php';
-require 'transcriptors.php';
+require_once 'output_json.php';
+require_once 'transcriptors.php';
 
 // Inicijaliziraj varijable $text i $dir na NULL.
 $text = NULL;
 $dir = NULL;
 
 /* Cijeli ostatak koda izvršava se u "try-catch" bloku.  Naime, svaka izbačena
- * iznimka ispisat će se slanjem JSON reprezentacije objekta {error: errmsg}
- * gdje je errmsg poruka izbačene iznimke. */
+ * iznimka ispisat će se slanjem JSON reprezentacije objekta
+ * {transcription: null, error: errmsg} gdje je errmsg poruka izbačene
+ * iznimke. */
 
 try
 {
   // Ako $_POST i $_GET nisu definirani, izbaci iznimku.
   if (!(isset($_POST) && isset($_GET)))
-    throw new Exception('Unexpected environment error.');
+    throw new Exception(
+      'Unexpected environment error: array(s) $_GET or $_POST missing.'
+    );
 
   // Ako $_POST i $_GET nisu nizovi, izbaci iznimku.
   if (!(is_array($_POST) && is_array($_GET)))
-    throw new Exception('Unexpected environment error.');
+    throw new Exception(
+      'Unexpected environment error: $_GET or $_POST are not arrays.'
+    );
 
   // Ako su metodom POST poslani neki argumenti, izbaci iznimku.
   if (!empty($_POST))
@@ -79,7 +84,11 @@ try
 
   // Ispiši traženu transkripciju u JSON formatu.
   output_json(
-    array('transcription' => $dir === 'l2g' ? lat2gla($text) : gla2lat($text))
+    array(
+      'transcription' => $dir === 'l2g' ?
+        transcribe_latinic_to_glagolitic($text) :
+        transcribe_glagolitic_to_latinic($text)
+    )
   );
 }
 catch (Exception $e)
