@@ -7,6 +7,7 @@
  * @package glagol
  */
 
+// Učitaj skriptu 'lookup_tables.php'.
 require_once 'lookup_tables.php';
 
 /**
@@ -92,21 +93,6 @@ function transcribe_latinic_to_glagolitic ($text)
       throw new Exception("Escape character (\"\\\") misuse.");
     }
 
-    // Ako je trenutni znak praznina, postavi varijablu $space na istinu,
-    // prepiši trenutni znak i prijeđi na sljedeću iteraciju petlje (na sljedeći
-    // znak).
-    if ($lat_text[$i] === '' || ctype_space($lat_text[$i]))
-    {
-      // Postavi varijablu $space na istinu.
-      $space = TRUE;
-
-      // Prepiši trenutni znak.
-      array_push($gla_text, $lat_text[$i]);
-
-      // Prijeđi na sljedeću iteraciju petlje (na sljedeći znak).
-      continue;
-    }
-
     // Ovisno o trenutnom znaku, to jest, je li '/', '[', ']' ili nešto četvrto
     // (koje do sad nije bilo provjereno), postupi odgovarajuće.
     switch ($lat_text[$i])
@@ -115,18 +101,11 @@ function transcribe_latinic_to_glagolitic ($text)
       // umetni slovo sa zadanim imenom.  Ako sljedeći znak '/' ne postoji ili
       // ako ime nije valjano, izbaci iznimku.
       case '/':
-        // Inicijaliziraj indeks sljedeće međe '/' $j na $i.
-        $j = $i;
+        // Pronađi indeks sljedeće međe '/' $j.
+        $j = array_search('/', array_slice($lat_text, $i + 1, NULL, TRUE));
 
-        // Pronađi indeks sljedeće međe '/' $j iteriranjem po $lat_text od
-        // $i + 1 do prvog znaka '/' ili do kraja.
-        for ($j = $i + 1; $j < sizeof($lat_text); ++$j)
-          if ($lat_text[$j] === '/')
-            break;
-
-        // Ako sljedeći znak '/' nije pronađen do kraja niza $lat_text, izbaci
-        // iznimku.
-        if ($j === sizeof($lat_text))
+        // Ako sljedeći znak '/' nije pronađen, izbaci iznimku.
+        if ($j === FALSE)
           throw new Exception("Special character (\"/\") misuse.");
 
         // Dohvati sadržaj između međa '/.../' u "string" $key.
@@ -160,6 +139,9 @@ function transcribe_latinic_to_glagolitic ($text)
         // Oslobodi memoriju.
         unset($key);
 
+        // Postavi varijablu $space na laž.
+        $space = FALSE;
+
         // Prekini "switch" naredbu.
         break;
 
@@ -167,18 +149,11 @@ function transcribe_latinic_to_glagolitic ($text)
       // umetni slovo tražene varijante.  Ako sljedeći znak ']' ne postoji ili
       // ako ime nije valjano, izbaci iznimku.
       case '[':
-        // Inicijaliziraj indeks sljedeće međe ']' $j na $i.
-        $j = $i;
+        // Pronađi indeks sljedeće međe ']' $j.
+        $j = array_search(']', array_slice($lat_text, $i + 1, NULL, TRUE));
 
-        // Pronađi indeks sljedeće međe ']' $j iteriranjem po $lat_text od
-        // $i + 1 do prvog znaka ']' ili do kraja.
-        for ($j = $i + 1; $j < sizeof($lat_text); ++$j)
-          if ($lat_text[$j] === ']')
-            break;
-
-        // Ako sljedeći znak ']' nije pronađen do kraja niza $lat_text, izbaci
-        // iznimku.
-        if ($j === sizeof($lat_text))
+        // Ako sljedeći znak ']' nije pronađen, izbaci iznimku.
+        if ($j === FALSE)
           throw new Exception("Special character (\"[\") misuse.");
 
         // Dohvati sadržaj od međe '[' do međe ']' u "string" $key.
@@ -203,6 +178,9 @@ function transcribe_latinic_to_glagolitic ($text)
 
         // Oslobodi memoriju.
         unset($key);
+
+        // Postavi varijablu $space na laž.
+        $space = FALSE;
 
         // Prekini "switch" naredbu.
         break;
@@ -230,11 +208,18 @@ function transcribe_latinic_to_glagolitic ($text)
           array_push($gla_text, LG[$lat_text[$i]]);
         else
           array_push($gla_text, $lat_text[$i]);
-    }
 
-    // Budući da trenutni znak nije mogao prethoditi početku riječi, postavi
-    // varijablu $space na laž.
-    $space = FALSE;
+        // Ako je trenutni znak slovo ili znamenka, postavi varijablu $space na
+        // laž, inače ju postavi na istinu ako je znak prikaziv.
+        if ($lat_text[$i] !== '')
+          if (ctype_print($lat_text[$i]))
+          {
+            if (ctype_alnum($lat_text[$i]))
+              $space = FALSE;
+            else
+              $space = TRUE;
+          }
+    }
   }
 
   // Oslobodi memoriju.

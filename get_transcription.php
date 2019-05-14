@@ -16,6 +16,7 @@
  * @package glagol
  */
 
+// Učitaj skripte 'output_json.php' i 'transcriptors.php'.
 require_once 'output_json.php';
 require_once 'transcriptors.php';
 
