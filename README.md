@@ -11,7 +11,7 @@ Iz sadržaja repozitorija izuzeta je ova *pročitajme* (*readme*) datoteka.
     2.  [**lookup_tables.php**](lookup_tables.php) &ndash; *lookup tablice* za transkripciju, to jest, asocijativni nizovi koji omogućuju funkcijsko preslikavanje između abeceda,
     3.  [**transcriptors.php**](transcriptors.php) &ndash; funkcije `transcribe_latinic_to_glagolitic` i `transcribe_glagolitic_to_latinic` za transkripciju s latinice na glagoljicu i s glagoljice na latinicu respektivno,
     4.  [**get_transcription.php**](get_transcription.php) &ndash; demonstracija korištenja funkcija iz [*transcriptors.php*](transcriptors.php) pomoću metode *GET* s *JSON* izlazom,
-2.  *web*-stranica za jednostavo transkribiranje tekstova s latinice na glagoljicu i obratno realizirano *pakiranjem* komunikacije s *PHP* skriptama (konkretno, s [*get_transcription.php*](get_transcription.php):
+2.  *web*-stranica za jednostavo transkribiranje tekstova s latinice na glagoljicu i obratno realizirano *pakiranjem* komunikacije s *PHP* skriptama (konkretno, s [*get_transcription.php*](get_transcription.php)):
     1.  [**index.html**](index.html) &ndash; k&ocirc;d statičnog dijela,
     2.  [**dynamo.js**](dynamo.js) &ndash; k&ocirc;d dinamičnog dijela; koristi se *jQuery* biblioteka koja se učitava preko interneta, a ne lokalno,
     3.  [**fancy.css**](fancy.css) &ndash; kod dizajna.
@@ -46,4 +46,4 @@ S vezom na internet i bez *zajebavanja* po *JavaScript* k&ocirc;du preko konzole
 ## TO DO
 
 1.  Dodati ovdje tablicu glagoljice, kako se slova transkribiraju i kako se slova zovu.
-2.  Objasniti ovdje kako, u transkripciji *l2g*, zadati glagoljički znak imenom umjesto jedinstvenim znakom i kako zahtijevati alternativnu varijantu nekog glagoljičkog znaka.
+2.  Objasniti ovdje kako, u transkripciji *l2g*, zadati glagoljično slovo imenom umjesto jedinstvenim znakom i kako zahtijevati alternativnu varijantu nekog glagoljičnog slova.
