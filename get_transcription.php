@@ -2,7 +2,7 @@
 /**
  * Skripta za dohvaćanje tarnskripcije.
  *
- * Metodom GET dohvaća se tekst za transkripciju (i smjer transkripcije), a u
+ * Metodom `GET` dohvaća se tekst za transkripciju (i smjer transkripcije), a u
  * JSON formatu ispisuje se njegova transkripcija: parametar 'text' zadaje tekst
  * za transkripciju (gotovi tekst ili JSON reprezentacija "stringa" teksta), a
  * parametar 'dir' je jedna od vrijednosti 'l2g' (transkribiraj s latinice na
@@ -31,26 +31,42 @@ $dir = NULL;
 
 try
 {
-  // Ako $_POST i $_GET nisu definirani, izbaci iznimku.
-  if (!(isset($_POST) && isset($_GET)))
+  // Ako $_SERVER nije definiran, izbaci iznimku.
+  if (!isset($_SERVER))
     throw new Exception(
-      'Unexpected environment error: array(s) $_GET or $_POST missing.'
+      "Unexpected environment error: array \$_SERVER missing."
     );
 
-  // Ako $_POST i $_GET nisu nizovi, izbaci iznimku.
-  if (!(is_array($_POST) && is_array($_GET)))
+  // Ako $_SERVER nije niz, izbaci iznimku.
+  if (!is_array($_SERVER))
     throw new Exception(
-      'Unexpected environment error: $_GET or $_POST are not arrays.'
+      "Unexpected environment error: \$_SERVER is not an array."
     );
 
-  // Ako su metodom POST poslani neki argumenti, izbaci iznimku.
-  if (!empty($_POST))
-    throw new Exception('Parameters must be given using the GET method.');
+  // Ako kljuc 'REQUEST_METHOD' ne postoji u nizu $_SERVER, izbaci iznimku.
+  if (!array_key_exists('REQUEST_METHOD', $_SERVER))
+    throw new Exception(
+      "Unexpected environment error: key \"REQUEST_METHOD\" missing in array " .
+      "\$_SERVER."
+    );
 
-  // Ako neki od parametara 'text' i 'dir' nisu poslani metodom GET, izbaci
-  // iznimku.
+  // Ako zahtjev nije poslan metodom `GET`, izbaci iznimku.
+  if ($_SERVER['REQUEST_METHOD'] !== 'GET')
+    throw new Exception('The request method must be `GET`.');
+
+  // Ako $_GET nije definiran, izbaci iznimku.
+  if (!isset($_GET))
+    throw new Exception("Unexpected environment error: array \$_GET missing.");
+
+  // Ako $_GET nije niz, izbaci iznimku.
+  if (!is_array($_GET))
+    throw new Exception(
+      "Unexpected environment error: \$_GET is not an array."
+    );
+
+  // Ako parametri 'text' i 'dir' nisu zadani, izbaci iznimku.
   if (!(array_key_exists('text', $_GET) && array_key_exists('dir', $_GET)))
-    throw new Exception("Parameters \"text\" and \"dir\" must be set.");
+    throw new Exception("Parameters \"text\" and/or \"dir\" missing.");
 
   // Ako je parametar 'text' "string", pokušaj ga dekodirati kao JSON i spremiti
   // u varijablu $text.
