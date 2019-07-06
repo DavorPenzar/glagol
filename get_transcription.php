@@ -66,7 +66,10 @@ try
 
   // Ako parametri 'text' i 'dir' nisu zadani, izbaci iznimku.
   if (!(array_key_exists('text', $_GET) && array_key_exists('dir', $_GET)))
-    throw new Exception("Parameters \"text\" and/or \"dir\" missing.");
+    throw new Exception(
+      'Missing parameter(s): ' .
+      implode(', ', array_diff(array('text', 'dir'), array_keys($_GET)))
+    );
 
   // Ako je parametar 'text' "string", pokušaj ga dekodirati kao JSON i spremiti
   // u varijablu $text.
@@ -93,7 +96,7 @@ try
 
   // Ako neka od vrijednosti $text i $dir nije "string", izbaci iznimku.
   if (!(is_string($text) && is_string($dir)))
-    throw new Exception("Parameters \"text\" and \"dir\" must be strings.");
+    throw new Exception("Parameters must be strings.");
 
   // Ako $dir nije 'l2g' ni 'g2l', izbaci iznimku.
   if ($dir !== 'l2g' && $dir !== 'g2l')
