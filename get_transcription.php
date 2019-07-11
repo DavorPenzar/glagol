@@ -31,89 +31,89 @@ $dir = NULL;
 
 try
 {
-  // Ako $_SERVER nije definiran, izbaci iznimku.
-  if (!isset($_SERVER))
-    throw new Exception(
-      "Unexpected environment error: array \$_SERVER missing."
-    );
+	// Ako $_SERVER nije definiran, izbaci iznimku.
+	if (!isset($_SERVER))
+		throw new Exception(
+			"Unexpected environment error: array \$_SERVER missing."
+		);
 
-  // Ako $_SERVER nije niz, izbaci iznimku.
-  if (!is_array($_SERVER))
-    throw new Exception(
-      "Unexpected environment error: \$_SERVER is not an array."
-    );
+	// Ako $_SERVER nije niz, izbaci iznimku.
+	if (!is_array($_SERVER))
+		throw new Exception(
+			"Unexpected environment error: \$_SERVER is not an array."
+		);
 
-  // Ako kljuc 'REQUEST_METHOD' ne postoji u nizu $_SERVER, izbaci iznimku.
-  if (!array_key_exists('REQUEST_METHOD', $_SERVER))
-    throw new Exception(
-      "Unexpected environment error: key \"REQUEST_METHOD\" missing in array " .
-      "\$_SERVER."
-    );
+	// Ako kljuc 'REQUEST_METHOD' ne postoji u nizu $_SERVER, izbaci iznimku.
+	if (!array_key_exists('REQUEST_METHOD', $_SERVER))
+		throw new Exception(
+			"Unexpected environment error: key \"REQUEST_METHOD\" missing in array " .
+			"\$_SERVER."
+		);
 
-  // Ako zahtjev nije poslan metodom `GET`, izbaci iznimku.
-  if ($_SERVER['REQUEST_METHOD'] !== 'GET')
-    throw new Exception('The request method must be `GET`.');
+	// Ako zahtjev nije poslan metodom `GET`, izbaci iznimku.
+	if ($_SERVER['REQUEST_METHOD'] !== 'GET')
+		throw new Exception('The request method must be `GET`.');
 
-  // Ako $_GET nije definiran, izbaci iznimku.
-  if (!isset($_GET))
-    throw new Exception("Unexpected environment error: array \$_GET missing.");
+	// Ako $_GET nije definiran, izbaci iznimku.
+	if (!isset($_GET))
+		throw new Exception("Unexpected environment error: array \$_GET missing.");
 
-  // Ako $_GET nije niz, izbaci iznimku.
-  if (!is_array($_GET))
-    throw new Exception(
-      "Unexpected environment error: \$_GET is not an array."
-    );
+	// Ako $_GET nije niz, izbaci iznimku.
+	if (!is_array($_GET))
+		throw new Exception(
+			"Unexpected environment error: \$_GET is not an array."
+		);
 
-  // Ako parametri 'text' i 'dir' nisu zadani, izbaci iznimku.
-  if (!(array_key_exists('text', $_GET) && array_key_exists('dir', $_GET)))
-    throw new Exception(
-      'Missing parameter(s): ' .
-      implode(', ', array_diff(array('text', 'dir'), array_keys($_GET)))
-    );
+	// Ako parametri 'text' i 'dir' nisu zadani, izbaci iznimku.
+	if (!(array_key_exists('text', $_GET) && array_key_exists('dir', $_GET)))
+		throw new Exception(
+			'Missing parameter(s): ' .
+			implode(', ', array_diff(array('text', 'dir'), array_keys($_GET)))
+		);
 
-  // Ako je parametar 'text' "string", pokušaj ga dekodirati kao JSON i spremiti
-  // u varijablu $text.
-  if (is_string($_GET['text']))
-    $text = json_decode($_GET['text']);
+	// Ako je parametar 'text' "string", pokušaj ga dekodirati kao JSON i spremiti
+	// u varijablu $text.
+	if (is_string($_GET['text']))
+		$text = json_decode($_GET['text']);
 
-  // Ako vrijednost varijable $text (još uvijek) nije "string",
-  // spremi doslovnu vrijednost $_GET['text'] u varijablu $text.
-  if (!is_string($text))
-    $text = $_GET['text'];
+	// Ako vrijednost varijable $text (još uvijek) nije "string",
+	// spremi doslovnu vrijednost $_GET['text'] u varijablu $text.
+	if (!is_string($text))
+		$text = $_GET['text'];
 
-  // Spremi vrijednost $_GET['dir'] u varijablu $dir.
-  $dir = $_GET['dir'];
+	// Spremi vrijednost $_GET['dir'] u varijablu $dir.
+	$dir = $_GET['dir'];
 
-  // Oslobodi memoriju.
-  unset($_GET['text']);
-  unset($_GET['dir']);
+	// Oslobodi memoriju.
+	unset($_GET['text']);
+	unset($_GET['dir']);
 
-  // Ako je ostalo parametara poslanih metodom GET, izbaci iznimku.
-  if (!empty($_GET))
-    throw new Exception(
-      'Unrecognised parameters: ' . implode(', ', array_keys($_GET)) . '.'
-    );
+	// Ako je ostalo parametara poslanih metodom GET, izbaci iznimku.
+	if (!empty($_GET))
+		throw new Exception(
+			'Unrecognised parameters: ' . implode(', ', array_keys($_GET)) . '.'
+		);
 
-  // Ako neka od vrijednosti $text i $dir nije "string", izbaci iznimku.
-  if (!(is_string($text) && is_string($dir)))
-    throw new Exception("Parameters must be strings.");
+	// Ako neka od vrijednosti $text i $dir nije "string", izbaci iznimku.
+	if (!(is_string($text) && is_string($dir)))
+		throw new Exception("Parameters must be strings.");
 
-  // Ako $dir nije 'l2g' ni 'g2l', izbaci iznimku.
-  if ($dir !== 'l2g' && $dir !== 'g2l')
-    throw new Exception("Direction \"" . $dir . "\" not recognised.");
+	// Ako $dir nije 'l2g' ni 'g2l', izbaci iznimku.
+	if ($dir !== 'l2g' && $dir !== 'g2l')
+		throw new Exception("Direction \"" . $dir . "\" not recognised.");
 
-  // Ispiši traženu transkripciju u JSON formatu.
-  output_json(
-    array(
-      'transcription' => $dir === 'l2g' ?
-        transcribe_latinic_to_glagolitic($text) :
-        transcribe_glagolitic_to_latinic($text)
-    )
-  );
+	// Ispiši traženu transkripciju u JSON formatu.
+	output_json(
+		array(
+			'transcription' => $dir === 'l2g' ?
+				transcribe_latinic_to_glagolitic($text) :
+				transcribe_glagolitic_to_latinic($text)
+		)
+	);
 }
 catch (Exception $e)
 {
-  // Ako je bila izbačena iznimka, ispiši JSON objekt s objašnjenjem greške.
-  // Dodatno, za transkripciju vrati nedefiniranu vrijednost.
-  output_json(array('transcription' => NULL, 'error' => $e->getMessage()));
+	// Ako je bila izbačena iznimka, ispiši JSON objekt s objašnjenjem greške.
+	// Dodatno, za transkripciju vrati nedefiniranu vrijednost.
+	output_json(array('transcription' => NULL, 'error' => $e->getMessage()));
 }

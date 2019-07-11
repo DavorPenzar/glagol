@@ -19,27 +19,27 @@
  */
 function output_json ($message, $exit_status = 0)
 {
-  // Ako je previše argumenata dano, izbaci iznimku.
-  if (func_num_args() > 2)
-    throw new Exception('Too many arguments given.');
+	// Ako je previše argumenata dano, izbaci iznimku.
+	if (func_num_args() > 2)
+		throw new Exception('Too many arguments given.');
 
-  // Ako $exit_status nije odgovarajućeg tipa, izbaci iznimku.
-  if (!(is_null($exit_status) || is_int($exit_status)))
-    throw new Exception('Exit status must be null or an integer.');
+	// Ako $exit_status nije odgovarajućeg tipa, izbaci iznimku.
+	if (!(is_null($exit_status) || is_int($exit_status)))
+		throw new Exception('Exit status must be null or an integer.');
 
-  // Postavi odgovarajuće HTTP zaglavlje (header).
-  header('Content-Type: Application/json; charset=utf-8');
+	// Postavi odgovarajuće HTTP zaglavlje (header).
+	header('Content-Type: Application/json; charset=utf-8');
 
-  // Ispiši JSON reprezentaciju dane poruke.
-  echo json_encode($message) . "\n";
+	// Ispiši JSON reprezentaciju dane poruke.
+	echo json_encode($message) . "\n";
 
-  // Ako izlazno stanje nije NULL, osiguraj ispis i završi izvršavanje skripte.
-  if (!is_null($exit_status))
-  {
-    // Osiguraj ispis.
-    flush();
+	// Ako izlazno stanje nije NULL, osiguraj ispis i završi izvršavanje skripte.
+	if (!is_null($exit_status))
+	{
+		// Osiguraj ispis.
+		flush();
 
-    // Završi izvršavanje skripte.
-    exit($exit_status);
-  }
+		// Završi izvršavanje skripte.
+		exit($exit_status);
+	}
 }

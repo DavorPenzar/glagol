@@ -14,13 +14,13 @@
  */
 let unset_error = function ()
 {
-  /* Provjeri poziv funkcije. */
-  if (arguments.length)
-    throw new Error('Bad function call.');
+	/* Provjeri poziv funkcije. */
+	if (arguments.length)
+		throw new Error('Bad function call.');
 
-  /* Sakrij #redak-greska i isprazni #celija-greska. */
-  $('#redak-greska').hide();
-  $('#celija-greska').empty();
+	/* Sakrij #redak-greska i isprazni #celija-greska. */
+	$('#redak-greska').hide();
+	$('#celija-greska').empty();
 }
 
 /**
@@ -32,17 +32,17 @@ let unset_error = function ()
  */
 let set_error = function (err)
 {
-  /* Provjeri poziv funkcije. */
-  if (arguments.length != 1)
-    throw new Error('Bad function call.');
+	/* Provjeri poziv funkcije. */
+	if (arguments.length != 1)
+		throw new Error('Bad function call.');
 
-  /* Provjeri tip argumenta. */
-  if (!(typeof err === 'string' || err instanceof String))
-    throw new Error('Parameter err must be a string.');
+	/* Provjeri tip argumenta. */
+	if (!(typeof err === 'string' || err instanceof String))
+		throw new Error('Parameter err must be a string.');
 
-  /* Ispiši poruku na #celija-greska i prikaži #redak-greska. */
-  $('#celija-greska').text(err);
-  $('#redak-greska').show();
+	/* Ispiši poruku na #celija-greska i prikaži #redak-greska. */
+	$('#celija-greska').text(err);
+	$('#redak-greska').show();
 }
 
 /**
@@ -50,7 +50,7 @@ let set_error = function (err)
  *
  * Argumenti dir i text šalju se metodom GET skripti get_transcription.php, a
  * odgovor se ispisuje na objekt `destination' pozivom
- *     $(destination).text(...);
+ * 	$(destination).text(...);
  * gdje je kao argument prikazan elipsom proslijeđen odgovor.  Ako je pri
  * komunikaciji s poslužiteljem došlo do greške, odgovor se ne ispisuje, nego se
  * pozivom funkcije set_error ispisuje poruka greške.  Za vrijeme slanja i
@@ -63,262 +63,262 @@ let set_error = function (err)
  */
 let transcribe = function (text, dir, destination, waiting)
 {
-  /* Provjeri poziv funkcije. */
-  if (arguments.length != 4)
-    throw new Error('Bad function call.');
+	/* Provjeri poziv funkcije. */
+	if (arguments.length != 4)
+		throw new Error('Bad function call.');
 
-  /* Provjeri tipove argumenata. */
-  if (!(typeof dir === 'string' || dir instanceof String))
-    throw new Error('Parameter dir must be a string.');
-  if (!(typeof text === 'string' || text instanceof String))
-    throw new Error('Parameter text must be a string.');
+	/* Provjeri tipove argumenata. */
+	if (!(typeof dir === 'string' || dir instanceof String))
+		throw new Error('Parameter dir must be a string.');
+	if (!(typeof text === 'string' || text instanceof String))
+		throw new Error('Parameter text must be a string.');
 
-  /* Spremi staru vrijednost objekta `waiting'. */
-  var old_val = $(waiting).val();
+	/* Spremi staru vrijednost objekta `waiting'. */
+	var old_val = $(waiting).val();
 
-  /* Upiši "…" na objekt `waiting'. */
-  $(waiting).val("…");
+	/* Upiši "…" na objekt `waiting'. */
+	$(waiting).val("…");
 
-  /* Pošalji AJAX zahtjev. */
-  $.ajax(
-    {
-      'url' : 'get_transcription.php',
+	/* Pošalji AJAX zahtjev. */
+	$.ajax(
+		{
+			'url' : 'get_transcription.php',
 
-      'type' : 'GET',
+			'type' : 'GET',
 
-      'data' : {'text' : JSON.stringify(text), 'dir' : dir},
+			'data' : {'text' : JSON.stringify(text), 'dir' : dir},
 
-      'dataType' : 'json',
+			'dataType' : 'json',
 
-      'error' :
-        function (xhr, status)
-        {
-          /* Ako je poruka greške prazna, ispiši 'Greška u komunikaciji.'. */
-          if (status === null)
-            set_error("Greška u komunikaciji.");
+			'error' :
+				function (xhr, status)
+				{
+					/* Ako je poruka greške prazna, ispiši 'Greška u komunikaciji.'. */
+					if (status === null)
+						set_error("Greška u komunikaciji.");
 
-          /* Ispiši poruku greške. */
-          set_error(status);
-        },
+					/* Ispiši poruku greške. */
+					set_error(status);
+				},
 
-      'success' :
-        function (ans)
-        {
-          /* Provjeri je li objekt odgovora definiran. */
-          if (ans === null)
-          {
-            set_error("Greška: nedefinirani odgovor poslužitelja.");
+			'success' :
+				function (ans)
+				{
+					/* Provjeri je li objekt odgovora definiran. */
+					if (ans === null)
+					{
+						set_error("Greška: nedefinirani odgovor poslužitelja.");
 
-            return;
-          }
+						return;
+					}
 
-          /* Provjeri je li odgovor instanca klase `object'. */
-          if (typeof ans !== 'object')
-          {
-            set_error("Greška: neočekivani tip odgovora poslužitelja.");
+					/* Provjeri je li odgovor instanca klase `object'. */
+					if (typeof ans !== 'object')
+					{
+						set_error("Greška: neočekivani tip odgovora poslužitelja.");
 
-            return;
-          }
+						return;
+					}
 
-          /* Provjeri ključeve odgovora. */
-          switch (Object.keys(ans).length)
-          {
-            case 1:
-              /* Ako odgovor ima samo jedan ključ, on mora biti
-               * 'transcription'. */
-              if (!('transcription' in ans))
-              {
-                set_error(
-                  "Greška: neočekivani sadržaj odgovora poslužitelja (1 " +
-                  "ključ koji nije 'transcription')."
-                );
+					/* Provjeri ključeve odgovora. */
+					switch (Object.keys(ans).length)
+					{
+						case 1:
+							/* Ako odgovor ima samo jedan ključ, on mora biti
+							 * 'transcription'. */
+							if (!('transcription' in ans))
+							{
+								set_error(
+									"Greška: neočekivani sadržaj odgovora poslužitelja (1 " +
+									"ključ koji nije 'transcription')."
+								);
 
-                return;
-              }
+								return;
+							}
 
-              break;
-            case 2:
-              /* Ako odgovor ima dva ključa, oni moraju biti 'transcription' i
-               * 'error'. */
-              if (!('transcription' in ans && 'error' in ans))
-              {
-                set_error(
-                  "Greška: neočekivani sadržaj odgovora poslužitelja (2 " +
-                  "ključa koji nisu 'transcription' i 'error')."
-                );
+							break;
+						case 2:
+							/* Ako odgovor ima dva ključa, oni moraju biti 'transcription' i
+							 * 'error'. */
+							if (!('transcription' in ans && 'error' in ans))
+							{
+								set_error(
+									"Greška: neočekivani sadržaj odgovora poslužitelja (2 " +
+									"ključa koji nisu 'transcription' i 'error')."
+								);
 
-                return;
-              }
+								return;
+							}
 
-              break;
+							break;
 
-            default:
-              /* Nula ili strogo više od dva ključa nisu valjani odgovor. */
-              set_error(
-                "Greška: neočekivani sadržaj odgovora poslužitelja (0 ili 3+ " +
-                "ključa)."
-              );
+						default:
+							/* Nula ili strogo više od dva ključa nisu valjani odgovor. */
+							set_error(
+								"Greška: neočekivani sadržaj odgovora poslužitelja (0 ili 3+ " +
+								"ključa)."
+							);
 
-              return;
-          }
+							return;
+					}
 
-          /* Provjeri je li odgovor rezultirao greškom. */
-          if ('error' in ans)
-          {
-            /* Provjeri je li sadržaj greške "string". */
-            if (
-              !(
-                ans['error'] === null ||
-                typeof ans['error'] === 'string' ||
-                ans['error'] instanceof String
-              )
-            )
-            {
-              set_error(
-                "Greška: neočekivana greška na strani poslužitelja (na ključu" +
-                "'error' je objekt krivog tipa)."
-              );
+					/* Provjeri je li odgovor rezultirao greškom. */
+					if ('error' in ans)
+					{
+						/* Provjeri je li sadržaj greške "string". */
+						if (
+							!(
+								ans['error'] === null ||
+								typeof ans['error'] === 'string' ||
+								ans['error'] instanceof String
+							)
+						)
+						{
+							set_error(
+								"Greška: neočekivana greška na strani poslužitelja (na ključu" +
+								"'error' je objekt krivog tipa)."
+							);
 
-              return;
-            }
+							return;
+						}
 
-            /* Provjeri je li transkripcija definirana. */
-            if (ans['transcription'] !== null)
-            {
-              set_error(
-                "Greška: neočekivana greška na strani poslužitelja (uz ključ " +
-                "'error' na ključu 'transcription' nije `null`)."
-              );
+						/* Provjeri je li transkripcija definirana. */
+						if (ans['transcription'] !== null)
+						{
+							set_error(
+								"Greška: neočekivana greška na strani poslužitelja (uz ključ " +
+								"'error' na ključu 'transcription' nije `null`)."
+							);
 
-              return;
-            }
+							return;
+						}
 
-            /* Ispiši poruku greške. */
-            set_error(
-              ans['error'] === null ?
-                "Greška: neočekivana greška na strani poslužitelja (`null`)." :
-                ans['error']
-            );
+						/* Ispiši poruku greške. */
+						set_error(
+							ans['error'] === null ?
+								"Greška: neočekivana greška na strani poslužitelja (`null`)." :
+								ans['error']
+						);
 
-            return;
-          }
+						return;
+					}
 
-          /* Provjeri je li sadržaj transkripcije "string". */
-          if (
-            !(
-              typeof ans['transcription'] === 'string' ||
-              ans['transcription'] instanceof String
-            )
-          )
-          {
-            set_error("Greška: neočekivani tip transkripcije.");
+					/* Provjeri je li sadržaj transkripcije "string". */
+					if (
+						!(
+							typeof ans['transcription'] === 'string' ||
+							ans['transcription'] instanceof String
+						)
+					)
+					{
+						set_error("Greška: neočekivani tip transkripcije.");
 
-            return;
-          }
+						return;
+					}
 
-          /* Ispiši sadržaj transkripcije. */
-          $(destination).val(ans['transcription']);
-        },
+					/* Ispiši sadržaj transkripcije. */
+					$(destination).val(ans['transcription']);
+				},
 
-      'complete' :
-        function ()
-        {
-          /* Vrati staru vrijednost na objekt `waiting'. */
-          $(waiting).val(old_val);
-        }
-    }
-  );
+			'complete' :
+				function ()
+				{
+					/* Vrati staru vrijednost na objekt `waiting'. */
+					$(waiting).val(old_val);
+				}
+		}
+	);
 }
 
 /* Pripremi okolinu. */
 $(document).ready(
-  function ()
-  {
-    /* Izbriši grešku. */
-    unset_error();
+	function ()
+	{
+		/* Izbriši grešku. */
+		unset_error();
 
-    /* Izbriši unos u formi #transkripcija. */
-    $('input[type=radio][name=dir]').prop('checked', false);
-    $('input[type=radio][name=dir]').val('');
-    $('#transkribiraj').val('');
-    $('textarea[name=tekst]').val('');
-    $('#transkripcija').off('submit');
+		/* Izbriši unos u formi #transkripcija. */
+		$('input[type=radio][name=dir]').prop('checked', false);
+		$('input[type=radio][name=dir]').val('');
+		$('#transkribiraj').val('');
+		$('textarea[name=tekst]').val('');
+		$('#transkripcija').off('submit');
 
-    /* Postavi vrijednosti oznaka smjera transkripcije. */
-    $('#l2g').val('l2g');
-    $('#g2l').val('g2l');
+		/* Postavi vrijednosti oznaka smjera transkripcije. */
+		$('#l2g').val('l2g');
+		$('#g2l').val('g2l');
 
-    /* Postavi vrijednost gumba #transkribiraj. */
-    $('#transkribiraj').val('Transkribiraj!');
+		/* Postavi vrijednost gumba #transkribiraj. */
+		$('#transkribiraj').val('Transkribiraj!');
 
-    /* Ispuni područja za unos inicijalnim vrijednostima (naziv pisma na
-     * odgovarajućem pismu). */
-    $('#latinica').val('Latinica');
-    $('#glagoljica').val("Ⰳⰾⰰⰳⱁⰾⰼⰻⱌⰰ");
+		/* Ispuni područja za unos inicijalnim vrijednostima (naziv pisma na
+		 * odgovarajućem pismu). */
+		$('#latinica').val('Latinica');
+		$('#glagoljica').val("Ⰳⰾⰰⰳⱁⰾⰼⰻⱌⰰ");
 
-    /* Definiraj ponašanje forme #transkripcija. */
-    $('#transkripcija').on(
-      'submit',
-      function ()
-      {
-        /* Izbriši grešku. */
-        unset_error();
+		/* Definiraj ponašanje forme #transkripcija. */
+		$('#transkripcija').on(
+			'submit',
+			function ()
+			{
+				/* Izbriši grešku. */
+				unset_error();
 
-        /* Provjeri je li smjer transkripcije odabran. */
-        if (!$('input[type=radio][name=dir]:checked').length)
-        {
-          set_error('Smjer transkripcije nije odabran.');
+				/* Provjeri je li smjer transkripcije odabran. */
+				if (!$('input[type=radio][name=dir]:checked').length)
+				{
+					set_error('Smjer transkripcije nije odabran.');
 
-          /* Vrati laž da se stranica ne osvježi. */
-          return false;
-        }
+					/* Vrati laž da se stranica ne osvježi. */
+					return false;
+				}
 
-        /* Dohvati smjer transkripcije. */
-        var dir = $('input[type=radio][name=dir]:checked').val();
+				/* Dohvati smjer transkripcije. */
+				var dir = $('input[type=radio][name=dir]:checked').val();
 
-        /* Provjeri je li smjer transkripcije zadan "stringom". */
-        if (!(typeof dir === 'string' || dir instanceof String))
-          throw new Error('Invalid type of the value dir.');
+				/* Provjeri je li smjer transkripcije zadan "stringom". */
+				if (!(typeof dir === 'string' || dir instanceof String))
+					throw new Error('Invalid type of the value dir.');
 
-        /* Ovisno o smjeru transkripcije, pozovi funckiju transcribe s
-         * odgovarajućim argumentima. */
-        switch (dir)
-        {
-          case 'l2g':
-            /* Za smjer s latinice na glagoljicu tekst se čita iz #latinica, a
-             * njegova transkripcija se ispisuje na #glagloljica. */
-            transcribe(
-              $('#latinica').val(),
-              'l2g',
-              $('#glagoljica'),
-              $('#transkribiraj')
-            );
+				/* Ovisno o smjeru transkripcije, pozovi funckiju transcribe s
+				 * odgovarajućim argumentima. */
+				switch (dir)
+				{
+					case 'l2g':
+						/* Za smjer s latinice na glagoljicu tekst se čita iz #latinica, a
+						 * njegova transkripcija se ispisuje na #glagloljica. */
+						transcribe(
+							$('#latinica').val(),
+							'l2g',
+							$('#glagoljica'),
+							$('#transkribiraj')
+						);
 
-            break;
+						break;
 
-          case 'g2l':
-            /* Za smjer s latinice na glagoljicu tekst se čita iz #glagoljcia, a
-             * njegova transkripcija se ispisuje na #latinica. */
-            transcribe(
-              $('#glagoljica').val(),
-              'g2l',
-              $('#latinica'),
-              $('#transkribiraj')
-            );
+					case 'g2l':
+						/* Za smjer s latinice na glagoljicu tekst se čita iz #glagoljcia, a
+						 * njegova transkripcija se ispisuje na #latinica. */
+						transcribe(
+							$('#glagoljica').val(),
+							'g2l',
+							$('#latinica'),
+							$('#transkribiraj')
+						);
 
-            break;
+						break;
 
-          default:
-            /* Za neprepoznati smjer šalje se prazni tekst i nedefinirana
-             * lokacija ispisa transkripcije. */
-            transcribe(dir, '', null);
+					default:
+						/* Za neprepoznati smjer šalje se prazni tekst i nedefinirana
+						 * lokacija ispisa transkripcije. */
+						transcribe(dir, '', null);
 
-            break;
-        }
+						break;
+				}
 
-        /* Vrati laž da se stranica ne osvježi. */
-        return false;
-      }
-    );
-  }
+				/* Vrati laž da se stranica ne osvježi. */
+				return false;
+			}
+		);
+	}
 );
