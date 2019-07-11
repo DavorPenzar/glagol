@@ -244,6 +244,12 @@ $(document).ready(
 		$('textarea[name=tekst]').val('');
 		$('#transkripcija').off('submit');
 
+		/* Namjesti veličine područja za unos. */
+		$('#latinica').prop('rows', 6);
+		$('#latinica').prop('cols', 80);
+		$('#glagoljica').prop('rows', 6);
+		$('#glagoljica').prop('cols', 80);
+
 		/* Postavi vrijednosti oznaka smjera transkripcije. */
 		$('#l2g').val('l2g');
 		$('#g2l').val('g2l');
