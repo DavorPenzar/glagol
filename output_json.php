@@ -31,7 +31,7 @@ function output_json ($message, $exit_status = 0)
   header('Content-Type: Application/json; charset=utf-8');
 
   // Ispiši JSON reprezentaciju dane poruke.
-  echo json_encode($message);
+  echo json_encode($message) . "\n";
 
   // Ako izlazno stanje nije NULL, osiguraj ispis i završi izvršavanje skripte.
   if (!is_null($exit_status))
