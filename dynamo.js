@@ -83,9 +83,13 @@ let transcribe = function (text, dir, destination, waiting)
   $.ajax(
     {
       'url' : 'get_transcription.php',
+
       'type' : 'GET',
+
       'data' : {'text' : JSON.stringify(text), 'dir' : dir},
+
       'dataType' : 'json',
+
       'error' :
         function (xhr, status)
         {
@@ -96,6 +100,7 @@ let transcribe = function (text, dir, destination, waiting)
           /* Ispiši poruku greške. */
           set_error(status);
         },
+
       'success' :
         function (ans)
         {
@@ -169,7 +174,10 @@ let transcribe = function (text, dir, destination, waiting)
               )
             )
             {
-              set_error("Greška: neočekivana greška na strani poslužitelja.");
+              set_error(
+                "Greška: neočekivana greška na strani poslužitelja (na ključu" +
+                "'error' je objekt krivog tipa)."
+              );
 
               return;
             }
@@ -177,7 +185,10 @@ let transcribe = function (text, dir, destination, waiting)
             /* Provjeri je li transkripcija definirana. */
             if (ans['transcription'] !== null)
             {
-              set_error("Greška: redundantni sadržaj odgovora poslužitelja.");
+              set_error(
+                "Greška: neočekivana greška na strani poslužitelja (uz ključ " +
+                "'error' na ključu 'transcription' nije `null`)."
+              );
 
               return;
             }
@@ -185,7 +196,7 @@ let transcribe = function (text, dir, destination, waiting)
             /* Ispiši poruku greške. */
             set_error(
               ans['error'] === null ?
-                "Greška na strani poslužitelja." :
+                "Greška: neočekivana greška na strani poslužitelja (`null`)." :
                 ans['error']
             );
 
@@ -208,6 +219,7 @@ let transcribe = function (text, dir, destination, waiting)
           /* Ispiši sadržaj transkripcije. */
           $(destination).val(ans['transcription']);
         },
+
       'complete' :
         function ()
         {
@@ -283,6 +295,7 @@ $(document).ready(
             );
 
             break;
+
           case 'g2l':
             /* Za smjer s latinice na glagoljicu tekst se čita iz #glagoljcia, a
              * njegova transkripcija se ispisuje na #latinica. */
@@ -294,10 +307,13 @@ $(document).ready(
             );
 
             break;
+
           default:
             /* Za neprepoznati smjer šalje se prazni tekst i nedefinirana
              * lokacija ispisa transkripcije. */
             transcribe(dir, '', null);
+
+            break;
         }
 
         /* Vrati laž da se stranica ne osvježi. */
