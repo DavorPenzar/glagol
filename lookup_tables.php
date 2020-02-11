@@ -2,9 +2,11 @@
 /**
  * Definicije lookup tablica realiziranih asocijativnim nizovima čiji su
  * ključevi i vrijednosti "stringovi".
+ *
  * @author Davor Penzar <davor.penzar@gmail.com>
  * @version 1.0
  * @package glagol
+ *
  */
 
 /**
@@ -13,11 +15,13 @@
  * također kao "stringovi".  Za znak × oznaka _× označava njegovu varijantu ako
  * se nalazi na početku riječi, a [×] označava njegovu drugu (alternativnu ako
  * su samo dvije, za treću bi se moglo uzeti [[×]] i tako dalje analogno)
- * varijantu.  Redoslijed oznaka _[×] bi odgovarao varijanti druge varijante
+ * varijantu.  Redoslijed oznaka _[×] odgovarao bi varijanti druge varijante
  * kada se nalazi na početku riječi, a ne [_×] jer se početak riječi zaključuje
  * iz konteksta dok se obična druga varijanta zadaje beskontekstno.
+ *
  * @var array LG latinica >> glagoljica
  * @name LG
+ *
  */
 define(
 	'LG',
@@ -114,15 +118,17 @@ define(
 );
 
 /**
- * Kao inverz nizu {@link LG}, ali sve varijante istog glagoljičnog slova, kao
+ * Kao inverz nizu `{@link LG}`, ali sve varijante istog glagoljičnog slova, kao
  * "stringova", preslikavaju se u isto (jedinstveno) latinični slovo, također
- * kao "stringovi".  Dakle, usporedbe {@link GL}[{@link LG}['_×']] === {@link GL}[{@link LG}['×']] i
- * {@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']] su istinitne vrijednosti.  Također, ako se više
- * slova (ključeva) u nizu {@link LG} preslikava u isto slovo (vrijednost), tom je slovu
- * (vrijednosti), kao kao ključu, u nizu {@link GL} pridruženo samo jedno od početnih
- * slova.
+ * kao "stringovi".  Dakle, usporedbe `{@link GL}[{@link LG}['_×']] === {@link GL}[{@link LG}['×']]` i
+ * `{@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']]` istinitne su vrijednosti.  Također, ako se
+ * više slova (ključeva) u nizu `{@link LG}` preslikava u isto slovo (vrijednost), tom
+ * je slovu (vrijednosti), kao kao ključu, u nizu `{@link GL}` pridruženo samo jedno od
+ * početnih slova.
+ *
  * @var array GL glagoljica >> latinica
  * @name GL
+ *
  */
 define(
 	'GL',
@@ -218,11 +224,13 @@ define(
 /**
  * Imenima glagoljičnih slova, kao "stringovima", pridružene su njihove
  * latinične reprezentacije, također kao "stringovi".  Varijante [×] u nizu
- * {@link LG_named} postoje, ali varijante _× ne, to jest, ako je ~ ime glagoljične
+ * `{@link LG_named}` postoje, ali varijante _× ne, to jest, ako je ~ ime glagoljične
  * reprezentacije znaka ×, onda je [~] ključ kojemu je pridruženo [×], ali ključ
  * _~ ne postoji i to ponovo jer se početak riječi zaključuje tek iz konteksta.
+ *
  * @var array LG_named imena na latinici >> latinični znakovi
  * @name LG_named
+ *
  */
 define(
 	'LG_named',
