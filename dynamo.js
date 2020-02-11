@@ -203,8 +203,8 @@ let transcribe = function (text, dir, destination, waiting)
 						{
 							// Ispiši grešku.
 							set_error(
-								"Greška: neočekivana greška na strani "
-								"poslužitelja (na ključu `'error'` objekt je "+
+								"Greška: neočekivana greška na strani " +
+								"poslužitelja (na ključu `'error'` objekt je " +
 								"krivog tipa)."
 							);
 
