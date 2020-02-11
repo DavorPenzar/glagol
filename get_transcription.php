@@ -93,7 +93,7 @@ try
 	if (sizeof($_GET) > 2)
 		throw new Exception(
 			'Unrecognised parameters: ' .
-			implode(', ', array_diff(array_keys($_GET), array('text', 'dir')) .
+			implode(', ', array_diff(array_keys($_GET), array('text', 'dir'))) .
 			'.'
 		);
 
