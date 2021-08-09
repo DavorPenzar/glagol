@@ -149,8 +149,8 @@ function transcribe_latinic_to_glagolitic ($text)
 					array_push($gla_text, LG[$key]);
 				else
 					throw new Exception(
-												"Unexpected transcription chain break up."
-										);
+						"Unexpected transcription chain break up."
+					);
 
 				// Oslobodi memoriju.
 				unset($key);
@@ -166,9 +166,9 @@ function transcribe_latinic_to_glagolitic ($text)
 			case '[':
 				// Pronađi indeks sljedeće međe `']'` `$j`.
 				$j = array_search(
-										']',
-										array_slice($lat_text, $i + 1, NULL, TRUE)
-								);
+					']',
+					array_slice($lat_text, $i + 1, NULL, TRUE)
+				);
 
 				// Ako sljedeći znak `']'` nije pronađen, izbaci iznimku.
 				if ($j === FALSE)
@@ -194,8 +194,8 @@ function transcribe_latinic_to_glagolitic ($text)
 					array_push($gla_text, LG[$key]);
 				else
 					throw new Exception(
-												"Letter variant \"" . $key . "\" not found."
-										);
+						"Letter variant \"" . $key . "\" not found."
+					);
 
 				// Oslobodi memoriju.
 				unset($key);
@@ -276,14 +276,14 @@ function transcribe_glagolitic_to_latinic ($text)
 	// Ako `GL` nije definiran, izbaci iznimku.
 	if (GL === null)
 		throw new Exception(
-						'Unexpected environment error: array `GL` missing.'
-				);
+			'Unexpected environment error: array `GL` missing.'
+		);
 
 	// Ako `GL` nije niz, izbaci iznimku.
 	if (!is_array(GL))
 		throw new Exception(
-						'Unexpected environment error: `GL` is not an array.'
-				);
+			'Unexpected environment error: `GL` is not an array.'
+		);
 
 	// Provjeri tip argumenta.  Ako nije "string", izbaci iznimku.
 	if (!is_string($text))

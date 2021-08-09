@@ -9,11 +9,11 @@
  */
 
 /**
- * Ispiši poruku u JSON formatu i po potrebi zavrsi izvrsavanje skripte.
+ * Ispiši poruku u JSON formatu i po potrebi završi izvršavanje skripte.
  *
  * Postavlja se odgovarajuće HTTP zaglavlje ("header") i naredbom `echo`
  * ispisuje se dana poruka u JSON formatu.  Ako izlazno stanje nije `NULL`,
- * izvrsavanje skripte prekida se pozivom funkcije `exit` s danim izlaznim
+ * izvršavanje skripte prekida se pozivom funkcije `exit` s danim izlaznim
  * stanjem; u suprotnom nije osiguran ispis (ne poziva se `flush()`) pri
  * završetku funkcije.
  *
@@ -32,7 +32,7 @@ function output_json ($message, $exit_status = 0)
 		throw new Exception('Exit status must be `NULL` or an integer.');
 
 	// Postavi odgovarajuće HTTP zaglavlje ("header").
-	header('Content-Type: Application/json; charset=utf-8');
+	header('Content-Type: application/json; charset=UTF-8');
 
 	// Ispiši JSON reprezentaciju dane poruke.
 	echo json_encode($message) . "\n";

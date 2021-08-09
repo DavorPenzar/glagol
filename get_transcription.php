@@ -27,7 +27,7 @@ require_once 'transcriptors.php';
 $text = NULL;
 $dir = NULL;
 
-/* Cijeli ostatak koda izvršava se u "try-catch" bloku.  Naime, svaka izbačena
+/* Cijeli ostatak kôda izvršava se u "try-catch" bloku.  Naime, svaka izbačena
  * iznimka ispisat će se slanjem JSON reprezentacije objekta
  * `{transcription: null, error: errmsg}` gdje je `errmsg` poruka izbačene
  * iznimke. */
@@ -46,7 +46,8 @@ try
 			"Unexpected environment error: `\$_SERVER` is not an array."
 		);
 
-	// Ako kljuc `'REQUEST_METHOD'` ne postoji u nizu `$_SERVER`, izbaci iznimku.
+	// Ako kljuc `'REQUEST_METHOD'` ne postoji u nizu `$_SERVER`, izbaci
+	// iznimku.
 	if (!array_key_exists('REQUEST_METHOD', $_SERVER))
 		throw new Exception(
 			"Unexpected environment error: key `\"REQUEST_METHOD\"` missing " .
@@ -54,7 +55,7 @@ try
 		);
 
 	// Ako zahtjev nije poslan metodom `GET`, izbaci iznimku.
-	if ($_SERVER['REQUEST_METHOD'] !== 'GET')
+	if (strcasecmp($_SERVER['REQUEST_METHOD'], 'GET'))
 		throw new Exception('The request method must be `GET`.');
 
 	// Ako `$_GET` nije definiran, izbaci iznimku.
@@ -79,7 +80,15 @@ try
 	// Ako je parametar `'text'` "string", pokušaj ga dekodirati kao JSON i
 	// spremiti u varijablu $text.
 	if (is_string($_GET['text']))
-		$text = json_decode($_GET['text']);
+	{
+		try
+		{
+			$text = json_decode($_GET['text'], null, 512, JSON_THROW_ON_ERROR);
+		}
+		catch (JsonException $ex)
+		{
+		}
+	}
 
 	// Ako vrijednost varijable `$text` (još uvijek) nije "string",
 	// spremi doslovnu vrijednost `$_GET['text']` u varijablu `$text`.
@@ -101,22 +110,26 @@ try
 	if (!(is_string($text) && is_string($dir)))
 		throw new Exception("Parameters must be strings.");
 
+	// Detektiraj traženi smjer transkripcije.
+	$l2g = !(boolean)strcasecmp($dir, 'l2g');
+	$g2l = !(boolean)strcasecmp($dir, 'g2l');
+
 	// Ako `$dir` nije `'l2g'` ni `'g2l'`, izbaci iznimku.
-	if ($dir !== 'l2g' && $dir !== 'g2l')
+	if (!($l2g || $g2l))
 		throw new Exception("Direction \"" . $dir . "\" not recognised.");
 
 	// Ispiši traženu transkripciju u JSON formatu.
 	output_json(
 		array(
-			'transcription' => $dir === 'l2g' ?
+			'transcription' => $l2g ?
 				transcribe_latinic_to_glagolitic($text) :
 				transcribe_glagolitic_to_latinic($text)
 		)
 	);
 }
-catch (Exception $e)
+catch (Exception $ex)
 {
 	// Ako je bila izbačena iznimka, ispiši JSON objekt s objašnjenjem greške.
 	// Dodatno, za transkripciju vrati nedefiniranu vrijednost.
-	output_json(array('transcription' => NULL, 'error' => $e->getMessage()));
+	output_json(array('transcription' => NULL, 'error' => $ex->getMessage()));
 }

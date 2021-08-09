@@ -23,7 +23,7 @@ Metodom *GET* (i samo metodom *GET*) moraju biti zadani parametri *text* i *dir*
 *   *l2g* &ndash; tekst (vrijednost parametra *text*) se transkribira s latinice na glagoljicu,
 *   *g2l* &ndash; tekst (vrijednost parametra *text*) se transkribira s glagoljice na latinicu.
 
-Ulazni tekst može sadržavati, među ostalima, razmake, znakove koji ne pripadaju *ASCII*-u (na primjer, ako je ulazni tekst na glagoljici i traži se transkripcija na latinicu) i slične *smetnje* da se nalazi u valjanom *URL*-u, stoga je dopušteno da parametar *text* bude zadan i u *JSON* formatu. Naravno, u slučaju jednostavnih tekstova, *JSON* formatiranje nije potrebno pa se može zadati i običnim tekstom. Dakle, valjani su svi sljedeći pozivi (`localhost/.../` je samo primjer mogućeg formata početka adrese &mdash; valjanost poziva ne referira se na taj dio, nego na dio od `/glagol` nadalje):
+Ulazni tekst može sadržavati, među ostalima, razmake, znakove koji ne pripadaju *ASCII*-u (na primjer, ako je ulazni tekst na glagoljici i traži se transkripcija na latinicu) i slične *smetnje* da se nalazi u valjanom *URL*-u, stoga je dopušteno da parametar *text* bude zadan i u *JSON* formatu. Naravno, u slučaju jednostavnih tekstova, *JSON* formatiranje nije potrebno pa se može zadati i običnim tekstom. Dakle, valjani su svi sljedeći pozivi (`localhost/.../` je samo primjer mogućeg formata početka adrese&mdash;valjanost poziva ne referira se na taj dio, nego na dio od `/glagol` nadalje):
 
 ```
 localhost/.../glagol/get_transcription.php?text=Lorem%20ipsum&dir=l2g

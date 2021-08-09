@@ -120,11 +120,12 @@ define(
 /**
  * Kao inverz nizu `{@link LG}`, ali sve varijante istog glagoljičnog slova, kao
  * "stringova", preslikavaju se u isto (jedinstveno) latinični slovo, također
- * kao "stringovi".  Dakle, usporedbe `{@link GL}[{@link LG}['_×']] === {@link GL}[{@link LG}['×']]` i
- * `{@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']]` istinitne su vrijednosti.  Također, ako se
- * više slova (ključeva) u nizu `{@link LG}` preslikava u isto slovo (vrijednost), tom
- * je slovu (vrijednosti), kao kao ključu, u nizu `{@link GL}` pridruženo samo jedno od
- * početnih slova.
+ * kao "stringovi".  Dakle, usporedbe
+ * `{@link GL}[{@link LG}['_×']] === {@link GL}[{@link LG}['×']]` i
+ * `{@link GL}[{@link LG}['[×]']] === {@link GL}[{@link LG}['×']]` istinitne su
+ * vrijednosti.  Također, ako se više slova (ključeva) u nizu `{@link LG}`
+ * preslikava u isto slovo (vrijednost), tom je slovu (vrijednosti), kao kao
+ * ključu, u nizu `{@link GL}` pridruženo samo jedno od početnih slova.
  *
  * @var array GL glagoljica >> latinica
  * @name GL
@@ -224,9 +225,10 @@ define(
 /**
  * Imenima glagoljičnih slova, kao "stringovima", pridružene su njihove
  * latinične reprezentacije, također kao "stringovi".  Varijante [×] u nizu
- * `{@link LG_named}` postoje, ali varijante _× ne, to jest, ako je ~ ime glagoljične
- * reprezentacije znaka ×, onda je [~] ključ kojemu je pridruženo [×], ali ključ
- * _~ ne postoji i to ponovo jer se početak riječi zaključuje tek iz konteksta.
+ * `{@link LG_named}` postoje, ali varijante _× ne, to jest, ako je ~ ime
+ * glagoljične reprezentacije znaka ×, onda je [~] ključ kojemu je pridruženo
+ * [×], ali ključ _~ ne postoji i to ponovo jer se početak riječi zaključuje tek
+ * iz konteksta.
  *
  * @var array LG_named imena na latinici >> latinični znakovi
  * @name LG_named

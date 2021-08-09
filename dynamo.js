@@ -1,5 +1,5 @@
 /**
- * JavaScript kod dinamičnog dijela stranice: komunikacija s poslužiteljem i
+ * JS kôd dinamičnog dijela stranice: komunikacija s poslužiteljem i
  * ispis rezultata transkripcije.
  *
  * @author Davor Penzar <davor.penzar@gmail.com>
@@ -95,7 +95,7 @@ let transcribe = function (text, dir, destination, waiting)
 
 			'type' : 'GET',
 
-			'data' : {'text' : JSON.stringify(text), 'dir' : dir},
+			'data' : { 'text' : JSON.stringify(text), 'dir' : dir },
 
 			'dataType' : 'json',
 
@@ -125,7 +125,7 @@ let transcribe = function (text, dir, destination, waiting)
 					}
 
 					// Provjeri je li odgovor instanca klase `object`.
-					if (typeof ans !== 'object')
+					if (!(typeof ans === 'object' || ans instanceof Object))
 					{
 						// Ispiši grešku.
 						set_error(
@@ -274,31 +274,6 @@ $(document).ready(
 		// Izbriši grešku.
 		unset_error();
 
-		// Izbriši unos u formi `'#transkripcija'`.
-		$('input[type=radio][name=dir]').prop('checked', false);
-		$('input[type=radio][name=dir]').val('');
-		$('#transkribiraj').val('');
-		$('textarea[name=tekst]').val('');
-		$('#transkripcija').off('submit');
-
-		// Namjesti veličine područja za unos.
-		$('#latinica').prop('rows', 6);
-		$('#latinica').prop('cols', 80);
-		$('#glagoljica').prop('rows', 6);
-		$('#glagoljica').prop('cols', 80);
-
-		// Postavi vrijednosti oznaka smjera transkripcije.
-		$('#l2g').val('l2g');
-		$('#g2l').val('g2l');
-
-		// Postavi vrijednost gumba `'#transkribiraj'`.
-		$('#transkribiraj').val('Transkribiraj!');
-
-		// Ispuni područja za unos inicijalnim vrijednostima (naziv pisma na
-		// odgovarajućem pismu).
-		$('#latinica').val('Latinica');
-		$('#glagoljica').val("Ⰳⰾⰰⰳⱁⰾⰼⰻⱌⰰ");
-
 		// Definiraj ponašanje forme `'#transkripcija'`.
 		$('#transkripcija').on(
 			'submit',
@@ -326,9 +301,9 @@ $(document).ready(
 
 				// Ovisno o smjeru transkripcije, pozovi funckiju `transcribe` s
 				// odgovarajućim argumentima.
-				switch (dir)
+				switch (dir.toUpperCase())
 				{
-					case 'l2g':
+					case 'L2G':
 						// Za smjer s latinice na glagoljicu tekst se čita iz
 						// `'#latinica'`, a njegova se transkripcija ispisuje na
 						// `'#glagloljica'`.
@@ -342,7 +317,7 @@ $(document).ready(
 						// Prekini `switch`-naredbu.
 						break;
 
-					case 'g2l':
+					case 'G2L':
 						// Za smjer s latinice na glagoljicu tekst se čita iz
 						// `'#glagoljcia'`, a njegova se transkripcija ispisuje
 						// na `'#latinica'`.
