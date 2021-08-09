@@ -1,6 +1,6 @@
 #   glagol
 
-Ovaj direktorij daje jednostavne *PHP* skripte (testirano na inačici **7.2**, ali možda funkcionira i na ranijim inačicama) za transkripciju s latinice (zbog *siromaštva* glasovne reprezentacije u latinici, neki simboli dani su zapravo ćiriličnim znakovima ili znakovima iz grčkog alfabeta, no u pravilu se zaista radi o latinici) na glagoljicu i obratno. Dodatno, demonstracija korištenja tih skripti proširena je *web*-stranicom napisanom u *HTML*-u (standard **5**), *JavaScriptu* i *CSS*-u (standard **3**).
+Ovaj direktorij daje jednostavne *PHP* skripte (testirano na inačici **7.4**, ali možda funkcionira i na ranijim inačicama) za transkripciju s latinice (zbog *siromaštva* glasovne reprezentacije u latinici, neki simboli dani su zapravo ćiriličnim znakovima ili znakovima iz grčkog alfabeta, no u pravilu se zaista radi o latinici) na glagoljicu i obratno. Dodatno, demonstracija korištenja tih skripti proširena je *web*-stranicom napisanom u *HTML*-u (standard **5**), *JavaScriptu* i *CSS*-u (standard **3**).
 
 ##  Sadržaj repozitorija
 
