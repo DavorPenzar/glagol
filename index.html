@@ -11,27 +11,30 @@
 
 	<head>
 
-		<!-- Postsavljanje kodiranja znakova na UTF-8. -->
-		<meta charset="UTF-8">
+		<!-- Postsavljanje kodiranja znakova na UTF-8 i ostalih osnovnih postavki prikaza. -->
+		<meta charset="UTF-8" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 		<!-- Postavljanje naslova stranice. -->
 		<title>Latinično-glagoljični i glagoljično-latinični transkriptor</title>
 
 		<!-- Postavljanje opisa, ključnih rijeci i autora stranice. -->
-		<meta name="description" content="Latinično-glagoljični i glagoljično-latinični transkriptor">
-		<meta name="keywords" content="latinica, glagoljica, pismo, transkripcija">
-		<meta name="author" content="Davor Penzar">
-		<meta name="developer" content="Davor Penzar">
+		<meta name="description" content="Latinično-glagoljični i glagoljično-latinični transkriptor" />
+		<meta name="keywords" content="latinica, glagoljica, pismo, transkripcija" />
+		<meta name="author" content="Davor Penzar" />
+		<meta name="developer" content="Davor Penzar" />
 
 		<!-- Učitavanje vanjskih JS skripti. -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha384-fJU6sGmyn07b+uD1nMk7/iSb4yvaowcueiQhfVgQuD98rfva8mcr1eSvjchfpMrH" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://polyfill.io/v3/polyfill.js?features=default%2Ces5%2Ces6%2Ces2015%2Ces7%2Ces2016%2Ces2017%2Ces2018%2Ces2019%2CIntl%2Cblissfuljs%2CNumber.MIN_SAFE_INTEGER%2CNumber.MAX_SAFE_INTEGER%2CNumber.EPSILON%2CNumber.Epsilon%2CNumber.isNaN%2CNumber.isFinite%2CNumber.isInteger%2CNumber.isSafeInteger%2CNumber.parseInt%2CNumber.parseFloat"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4= sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha256-zMDueDFY0as65ZDvjJgqgn446Lgv0SFVHN1MIAQfzRs= sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp sha512-XLo6bQe08irJObCc86rFEKQdcFYbGGIHVXcfMsxpbvF8ompmd1SNJjqVY5hmjQ01Ts0UmmSQGfqpt3fGjm6pGA==" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha256-c4Ll6eSIg6Eothk8pCWAF8aE923EvtU11pqjBy+NjNM= sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/ sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q==" crossorigin="anonymous"></script>
 
 		<!-- Učitavanje stilizacije stranice. -->
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-		<link rel="stylesheet" href="fancy.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha256-z8OR40MowJ8GgK6P89Y+hiJK5+cclzFHzLhFQLL92bg= sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="fancy.css" />
 
 	</head>
 
@@ -41,12 +44,11 @@
 		<header class="container container-fluid mt-3">
 
 			<!-- Naslov. -->
-			<h1 class="h1">
-				Latinično-glagoljični i glagoljično-latinični transkriptor
-			</h1>
+			<h1 class="h1" id="sec-latinicno-glagoljicni-i-glagoljicno-latinicni-transkriptor">Latinično-glagoljični i glagoljično-latinični transkriptor</h1>
 
 			<!-- Informacije. -->
 			<div id="info">
+				<h3 class="h3" id="sec-napomene">Napomene</h3>
 				<p class="text-justify">
 					Neka se slova s latinice na glagoljicu ne zadaju <em>stvarno</em> latiničnim slovima, nego slovima iz grčkog alfabeta ili ćirilice.
 					To je zato što neki glasovi naprosto nemaju odgovarajuću reprezentaciju u latinici.
@@ -74,8 +76,12 @@
 
 		<!-- Glavni dio stranice. -->
 		<section class="container container-fluid" id="glavnina">
+
+			<!-- Podnaslov -->
+			<h2 class="h2" id="sec-transkripcija">Transkripcija</h2>
+
 			<!-- Forma za transkripciju. -->
-			<form id="transkripcija">
+			<form class="container" id="transkripcija">
 				<!--
 					Konstrukcija forme realizirana je tablicom:
 						[UNOS LATINICE]
@@ -96,7 +102,7 @@
 					<textarea class="form-control" name="text" id="latinica" form="transkripcija">Latinica</textarea>
 				</div>
 
-				<div class="row form-row">
+				<div class="row form-row mt-2">
 					<label for="glagoljica">Glagoljica</label>
 					<textarea class="form-control" name="text" id="glagoljica" form="transkripcija">Ⰳⰾⰰⰳⱁⰾⰼⰻⱌⰰ</textarea>
 				</div>
@@ -115,7 +121,9 @@
 				</div>
 
 				<div class="row form-row">
-					<input class="btn btn-primary" type="submit" id="transkribiraj" value="Transkribiraj!" />
+					<div class="container">
+						<input class="btn btn-primary" type="submit" id="transkribiraj" value="Transkribiraj!" />
+					</div>
 				</div>
 
 				<div class="row form-row" id="redak-greska">
@@ -123,6 +131,7 @@
 				<div>
 
 			</form>
+
 		</section>
 
 		<!-- Dno stranice. -->
@@ -131,7 +140,7 @@
 		</footer>
 
 		<!-- Učitavanje JS skripte dinamočnog dijela stranice. -->
-		<script src="dynamo.js"></script>
+		<script type="text/javascript" src="dynamo.js"></script>
 
 	</body>
 
